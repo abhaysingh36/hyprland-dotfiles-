@@ -75,6 +75,13 @@ alias wifi_connect="nmcli dev wifi connect"
 alias docker_images="sudo docker images"
 alias cd..="cd .."
 alias restart="systemctl --user restart dbus"     
+function fuck --wraps='thefuck' --description 'Correct the last command'
+    set -l last_command (history | head -n 1)
+    thefuck $last_command | read -l fixed_command
+    if test -n "$fixed_command"
+        eval $fixed_command
+    end
+end
 
 end
 
