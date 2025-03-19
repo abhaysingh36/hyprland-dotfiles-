@@ -27,6 +27,8 @@ atuin init fish | source
 
 
 
+alias cc="wl-copy"
+alias vv="wl-paste"
 
 set fish_greeting ""
 alias partitionmanager='sudo -E dbus-launch partitionmanager'
