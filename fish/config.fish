@@ -21,7 +21,13 @@ set -gx GTK_ICON_THEME "Adwaita"
 set -x QT_QPA_PLATFORM wayland
 set -Ux GDK_BACKEND wayland
 set -x QT_QPA_PLATFORM xcb
+# Replace fish_add_path with manual path updates
+set -Ux ANDROID_HOME $HOME/Android/Sdk
 
+# Add paths to $fish_user_paths
+set -U fish_user_paths $fish_user_paths $ANDROID_HOME/cmdline-tools/latest/bin
+set -U fish_user_paths $fish_user_paths $ANDROID_HOME/platform-tools
+set -U fish_user_paths $fish_user_paths $ANDROID_HOME/emulator  # If using emulator
 atuin init fish | source
 
 
