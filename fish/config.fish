@@ -23,19 +23,21 @@ set -Ux GDK_BACKEND wayland
 set -x QT_QPA_PLATFORM xcb
 # Replace fish_add_path with manual path updates
 set -Ux ANDROID_HOME $HOME/Android/Sdk
-
-# Add paths to $fish_user_paths
-set -U fish_user_paths $fish_user_paths $ANDROID_HOME/cmdline-tools/latest/bin
-set -U fish_user_paths $fish_user_paths $ANDROID_HOME/platform-tools
-set -U fish_user_paths $fish_user_paths $ANDROID_HOME/emulator  # If using emulator
 atuin init fish | source
-
+set -gx PATH $HOME/.pyenv/bin $PATH
+    # ros2 setup 
+# Set ROS 2 environment variables
+set -x AMENT_PREFIX_PATH /opt/ros/humble
+set -x ROS_DISTRO humble
+set -x PATH $PATH:/opt/ros/humble/bin
+set -x PYTHONPATH /opt/ros/humble/lib/python3.11/site-packages $PYTHONPATH
+set -x LD_LIBRARY_PATH /opt/ros/humble/lib $LD_LIBRARY_PATH
 
 
 
 alias cc="wl-copy"
 alias vv="wl-paste"
-
+alias ros2="~/.config/hypr/scripts/ros2_3.11.fish.fish"
 set fish_greeting ""
 alias partitionmanager='sudo -E dbus-launch partitionmanager'
 alias ram_usage="smem -t -r  | fzf"
