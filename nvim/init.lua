@@ -29,8 +29,8 @@ vim.api.nvim_set_keymap("n", "<C-v>", '"+p', { noremap = true, silent = true })
 vim.api.nvim_set_keymap("v", "<C-/>", ":Commentary<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<C-z>", "u", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("v", "<C-/>", ":Commentary<CR>", { noremap = true, silent = true })
-
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim" ---  .. is conctaenate command in lua
+vim.keymap.set("n", "<leader>p", vim.diagnostic.open_float, { desc = "Open diagnostic float" })
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim" --- .. is conctaenate command in lua
 
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
@@ -39,8 +39,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 		vim.highlight.on_yank()
 	end,
 })
-
---- beloew is the back of neovim if the uv vim.loop is not present , it will get cloned from the main repo
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
 	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
@@ -49,8 +47,8 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	end
 end
 
-vim.opt.rtp:prepend(lazypath) --- prepend , tell do this task before anyother task
-
+vim.opt.rtp:prepend(lazypath)
+---@diagnostic disable: missing-fields
 require("lazy").setup({
 	"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
 	{ "tpope/vim-commentary" },
@@ -180,6 +178,8 @@ require("lazy").setup({
 			end, { desc = "[S]earch [N]eovim files" })
 		end,
 	},
+
+	-- LSP Plugins
 	{
 
 		"folke/lazydev.nvim",
@@ -192,7 +192,6 @@ require("lazy").setup({
 		},
 	},
 	{ "Bilal2453/luvit-meta", lazy = true },
-
 	{
 		-- Main LSP Configuration
 		"neovim/nvim-lspconfig",
@@ -250,38 +249,6 @@ require("lazy").setup({
 					map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction", { "n", "x" })
 
 					map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
-
-					local client = vim.lsp.get_client_by_id(event.data.client_id)
-					if client and client.supports_method("textDocument/documentHighlight") then
-						local highlight_augroup =
-							vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
-						vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-							buffer = event.buf,
-							group = highlight_augroup,
-							callback = vim.lsp.buf.document_highlight,
-						})
-
-						vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-							buffer = event.buf,
-							group = highlight_augroup,
-							callback = vim.lsp.buf.clear_references,
-						})
-
-						vim.api.nvim_create_autocmd("LspDetach", {
-							group = vim.api.nvim_create_augroup("kickstart-lsp-detach", { clear = true }),
-							callback = function(event2)
-								vim.lsp.buf.clear_references()
-								vim.api.nvim_clear_autocmds({ group = "kickstart-lsp-highlight", buffer = event2.buf })
-							end,
-						})
-					end
-
-					-- This may be unwanted, since they displace some of your code
-					if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
-						map("<leader>th", function()
-							vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
-						end, "[T]oggle Inlay [H]ints")
-					end
 				end,
 			})
 
@@ -335,6 +302,9 @@ require("lazy").setup({
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
 			require("mason-lspconfig").setup({
+				---  -- Add these to satisfy the type checker (LuaLS)
+				ensure_installed = vim.tbl_keys(servers),
+				automatic_installation = true,
 				handlers = {
 					function(server_name)
 						local server = servers[server_name] or {}
