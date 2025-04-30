@@ -50,6 +50,8 @@ end
 vim.opt.rtp:prepend(lazypath)
 ---@diagnostic disable: missing-fields
 require("lazy").setup({
+	{ import = "plugins" },
+
 	"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
 	{ "tpope/vim-commentary" },
 	{
