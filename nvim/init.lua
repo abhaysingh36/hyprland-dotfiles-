@@ -30,7 +30,7 @@ vim.api.nvim_set_keymap("v", "<C-/>", ":Commentary<CR>", { noremap = true, silen
 vim.api.nvim_set_keymap("n", "<C-z>", "u", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("v", "<C-/>", ":Commentary<CR>", { noremap = true, silent = true })
 
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim" --- .. is conctaenate command in lua
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim" ---  .. is conctaenate command in lua
 
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
@@ -39,6 +39,8 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 		vim.highlight.on_yank()
 	end,
 })
+
+--- beloew is the back of neovim if the uv vim.loop is not present , it will get cloned from the main repo
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
 	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
@@ -47,7 +49,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	end
 end
 
-vim.opt.rtp:prepend(lazypath)
+vim.opt.rtp:prepend(lazypath) --- prepend , tell do this task before anyother task
 
 require("lazy").setup({
 	"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
@@ -178,8 +180,6 @@ require("lazy").setup({
 			end, { desc = "[S]earch [N]eovim files" })
 		end,
 	},
-
-	-- LSP Plugins
 	{
 
 		"folke/lazydev.nvim",
@@ -192,6 +192,7 @@ require("lazy").setup({
 		},
 	},
 	{ "Bilal2453/luvit-meta", lazy = true },
+
 	{
 		-- Main LSP Configuration
 		"neovim/nvim-lspconfig",
@@ -251,7 +252,7 @@ require("lazy").setup({
 					map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
 
 					local client = vim.lsp.get_client_by_id(event.data.client_id)
-					if client and client.supports_method("textDocument/document_highlight") then
+					if client and client.supports_method("textDocument/documentHighlight") then
 						local highlight_augroup =
 							vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
 						vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
