@@ -26,15 +26,17 @@ set -Ux ANDROID_HOME $HOME/Android/Sdk
 atuin init fish | source
 set -gx PATH $HOME/.pyenv/bin $PATH
     # ros2 setup 
-# Set ROS 2 environment variables
-set -x AMENT_PREFIX_PATH /opt/ros/humble
-set -x ROS_DISTRO humble
-set -x PATH $PATH:/opt/ros/humble/bin
-set -x PYTHONPATH /opt/ros/humble/lib/python3.11/site-packages $PYTHONPATH
-set -x LD_LIBRARY_PATH /opt/ros/humble/lib $LD_LIBRARY_PATH
 
 
 
+zoxide init fish | source
+set -gx _ZO_DATA_DIR /home/asdf/zoxide
+set -gx _ZO_ECHO 1
+set -gx FZF_DEFAULT_COMMAND 'ls -1'
+set -gx FZF_DEFAULT_OPTS "--layout=reverse --info=inline"
+set -gx FZF_DEFAULT_OPTS_FILE /home/asdf/.fzf-defaults
+
+# aliases 
 alias cc="wl-copy"
 alias vv="wl-paste"
 alias ros2="~/.config/hypr/scripts/ros2_3.11.fish.fish"
@@ -85,13 +87,6 @@ alias wifi_connect="nmcli dev wifi connect"
 alias docker_images="sudo docker images"
 alias cd..="cd .."
 alias restart="systemctl --user restart dbus"     
-function fuck --wraps='thefuck' --description 'Correct the last command'
-    set -l last_command (history | head -n 1)
-    thefuck $last_command | read -l fixed_command
-    if test -n "$fixed_command"
-        eval $fixed_command
-    end
-end
 
 end
 

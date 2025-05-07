@@ -13,7 +13,7 @@ return {
 			disable_netrw = true,
 			hijack_netrw = true,
 			filters = {
-				dotfiles = false,
+				dotfiles = true,
 			},
 			view = {
 				width = 50,
