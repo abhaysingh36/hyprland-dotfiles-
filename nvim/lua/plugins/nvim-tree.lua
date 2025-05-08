@@ -7,7 +7,7 @@ return {
 			"nvim-telescope/telescope.nvim", -- Fuzzy finder
 		},
 		keys = {
-			{ "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Toggle NvimTree" },
+			{ "<leader>ke", "<cmd>NvimTreeToggle<cr>", desc = "Toggle NvimTree" },
 		},
 		opts = {
 			disable_netrw = true,
