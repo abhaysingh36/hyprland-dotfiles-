@@ -7,10 +7,10 @@ return {
 			"nvim-telescope/telescope.nvim", -- Fuzzy finder
 		},
 		keys = {
-			{ "<leader>ke", "<cmd>NvimTreeToggle<cr>", desc = "Toggle NvimTree" },
+			{ "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Toggle NvimTree" },
 		},
 		opts = {
-			disable_netrw = true,
+			disable_netrw = false,
 			hijack_netrw = true,
 			filters = {
 				dotfiles = true,
@@ -18,6 +18,9 @@ return {
 			view = {
 				width = 50,
 				side = "right",
+			},
+			live_filter = {
+				always_show_folders = false, -- Allow folders to be filtered
 			},
 			on_attach = function(bufnr)
 				local api = require("nvim-tree.api")
@@ -31,22 +34,26 @@ return {
 					}
 				end
 
-				-- Default mappings
-				api.config.mappings.default_on_attach(bufnr)
+				-- Minimal mappings to avoid conflicts
+				vim.keymap.set("n", "<C-]>", api.tree.change_root_to_node, opts("CD"))
+				vim.keymap.set("n", "<C-e>", api.node.open.edit, opts("Open"))
+				vim.keymap.set("n", "<CR>", api.node.open.edit, opts("Open"))
+				vim.keymap.set("n", "a", api.fs.create, opts("Create"))
+				vim.keymap.set("n", "d", api.fs.remove, opts("Delete"))
+				vim.keymap.set("n", "r", api.fs.rename, opts("Rename"))
 
 				-- Custom focus mappings
 				vim.keymap.set("n", "t", api.tree.focus, opts("Focus Tree"))
 				vim.keymap.set("n", "e", "<C-w>h", opts("Focus Left Window (Editor)"))
 
-				-- 🔍 Live filter inside tree
+				-- Live filter mappings
 				vim.keymap.set("n", "/", api.live_filter.start, opts("Start Live Filter"))
 				vim.keymap.set("n", "?", api.live_filter.clear, opts("Clear Live Filter"))
 
-				-- 🔎 Fuzzy find using Telescope (includes folders!)
+				-- Telescope fuzzy find
 				vim.keymap.set("n", "<leader>f", function()
 					local node = api.tree.get_node_under_cursor()
 					local path = node and node.absolute_path or vim.fn.getcwd()
-
 					require("telescope.builtin").find_files({
 						cwd = path,
 						prompt_title = "Find Files and Folders",
