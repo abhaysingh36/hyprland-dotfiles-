@@ -1,4 +1,3 @@
--- lua/functions/keymaps.lua
 local M = {}
 
 -- Function to set up custom keymaps
@@ -23,6 +22,10 @@ function M.setup()
 
 	-- Undo with <C-z> in normal mode
 	vim.api.nvim_set_keymap("n", "<C-z>", "u", { noremap = true, silent = true })
+
+	-- Run Python file with <F5> in normal mode
+	vim.keymap.set("n", "<F5>", ":w<CR>:!python3 %<CR>", { noremap = true, silent = false })
+	vim.keymap.set("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Show float diagnostics" })
 end
 
 return M
