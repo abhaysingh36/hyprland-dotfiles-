@@ -91,4 +91,4 @@ alias restart="systemctl --user restart dbus"
 end
 
 
-
+set -g fish_key_bindings fish_vi_key_bindings
