@@ -98,16 +98,9 @@
     },
   "custom/nightlight": {
   "format": "🌙",
-  "on-click": "/home/asdf/.config/scripts/nightlight.sh",
+  "on-click": "/home/asdf/.config/hypr/user_scripts/nightlight.sh" ,
   "tooltip": "Toggle Night Light"
 },
-"custom/net-speed": {
-  "exec": "~/.config/scripts/netspeed.sh",
-  "interval": 1,
-  "format": "{}",
-  "tooltip": "Download & Upload Speed"
-}
-
 
 
   }
