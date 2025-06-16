@@ -26,6 +26,8 @@ function M.setup()
 	-- Run Python file with <F5> in normal mode
 	vim.keymap.set("n", "<F5>", ":w<CR>:!python3 %<CR>", { noremap = true, silent = false })
 	vim.keymap.set("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Show float diagnostics" })
+	vim.keymap.set("i", "<A-a>", "b", { noremap = true })
+	vim.keymap.set("i", "<A-w>", "n", { noremap = true })
 end
 
 return M
