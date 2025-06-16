@@ -96,9 +96,6 @@ alias docker_images='sudo docker images'
 alias kitty_image='kitty +kitten icat'
 # default storage of docker is /var/lib/docker
 #Check running containers: Use docker ps to see which containers are currently running.
-#Running a new container: If you want to create and start a new instance of an image, use docker run <image_name>
-
-
 alias cd..='cd ..'
 # system architecture commands or notes 
 # sudo su --> changes user  to root user 
