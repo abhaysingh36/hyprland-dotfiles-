@@ -49,7 +49,6 @@ date '+%b %d (%a) %I:%M%p'
 export GTK_THEME=Adwaita:dark
 
 # fun part 
-alias ksai='source /home/asdf/Desktop/ksai/bin/activate'
 alias neo='nvim ~/.config/nvim/init.lua'
 alias zeb-duke='blueman-manager'
 alias s='. ~/.bashrc'
