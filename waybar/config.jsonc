@@ -49,7 +49,7 @@
     "tooltip-format": "Lock Screen"
   },
 "custom/brightness": {
-  "format": "󰃠 {}%",  // Icon + percentage
+  "format": "󰃠 ",  // Icon + percentage
   "exec": "/home/asdf/.config/hypr/scripts/brightness.sh",
   "return-type": "json",
   "interval": 1,

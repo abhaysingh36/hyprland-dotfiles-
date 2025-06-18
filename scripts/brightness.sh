@@ -1,18 +1,20 @@
 #!/bin/bash
 
-# Get current brightness percentage
-CURRENT_BRIGHTNESS=$(brightnessctl -m | awk -F, '{print $6}' | tr -d '%')
-STEP=7
+# Path to brightnessctl or another brightness control tool
+BRIGHTNESS=$(brightnessctl | grep -oP '(?<=Current brightness: )\d+' | head -1)
+MAX_BRIGHTNESS=$(brightnessctl | grep -oP '(?<=Max brightness: )\d+' | head -1)
+PERCENT=$(( ($BRIGHTNESS * 100) / $MAX_BRIGHTNESS ))
 
-# Handle click events
-case "$3" in
-    "up")
-        brightnessctl set +${STEP}%
-        ;;
-    "down")
-        brightnessctl set ${STEP}%-
-        ;;
-esac
+# Handle arguments for brightness up/down
+if [ "$1" = "up" ]; then
+  brightnessctl set +5%
+  BRIGHTNESS=$(brightnessctl | grep -oP '(?<=Current brightness: )\d+' | head -1)
+  PERCENT=$(( ($BRIGHTNESS * 100) / $MAX_BRIGHTNESS ))
+elif [ "$1" = "down" ]; then
+  brightnessctl set 5%-
+  BRIGHTNESS=$(brightnessctl | grep -oP '(?<=Current brightness: )\d+' | head -1)
+  PERCENT=$(( ($BRIGHTNESS * 100) / $MAX_BRIGHTNESS ))
+fi
 
-# Output JSON for Waybar
-echo "{\"text\": \" ${CURRENT_BRIGHTNESS}%\", \"percentage\": ${CURRENT_BRIGHTNESS}}"
+# Output JSON
+echo "{\"text\": \"$PERCENT% \",\"tooltip\": \"Brightness: $PERCENT%\"}"
