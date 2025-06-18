@@ -25,9 +25,6 @@ if [ -d ~/.bashrc.d ]; then
 fi
 
 unset rc
-
-
-
 export HISTCONTROL=ignoredups
 export COLORFGBG='default;default'
 # Initialize zoxide and fzf with the bash  , zoxide hellps to auto jumps and add directory to its database 
@@ -48,7 +45,6 @@ export TZ="Asia/Kolkata"
 date '+%b %d (%a) %I:%M%p'
 export GTK_THEME=Adwaita:dark
 
-# fun part 
 alias neo='nvim ~/.config/nvim/init.lua'
 alias zeb-duke='blueman-manager'
 alias s='. ~/.bashrc'
@@ -74,36 +70,34 @@ alias topcpu='top -o %CPU'
 alias topmem='top -o %MEM'
 alias watchdisk='watch -n 5 df -h'
 alias meminfo='cat /proc/meminfo'
-alias qq='list_custom_methods'
-alias desktop='cd ~/Desktop'
-alias start='sudo systemctl start'
-alias stop='sudo systemctl stop'
-alias restart='sudo systemctl restart'
-alias status='sudo systemctl status'
-alias enable='sudo systemctl enable'
-alias disable='sudo systemctl disable'
 #KERNAL RELATED 
 alias kernel='uname -r'        # Show kernel version
 alias sysinfo='hostnamectl'    # Show system info
 alias uinfo='lsb_release -a'   # Show distribution info (if available)
 alias sensors='sensors'        # Show sensor information (requires lm_sensors)
 alias back-one='git reset --hard '
-alias wifi='sudo nmcli dev wifi list'
-alias wifi_status='nmcli connection show'
-alias wifi_connect='nmcli dev  wifi connect'
 # docker aliases 
 alias docker_images='sudo docker images'
-alias kitty_image='kitty +kitten icat'
-# default storage of docker is /var/lib/docker
-#Check running containers: Use docker ps to see which containers are currently running.
 alias cd..='cd ..'
+alias connect=" iwctl station wlan0 connect"
+alias disconnect=" iwctl station wlan0 disconnect"
+
 # system architecture commands or notes 
 # sudo su --> changes user  to root user 
 # sudo su - asdf --> changes  user  to defined user 
 ## Navigating backwards 
 ..() { cd "$(eval printf '../%.0s' {1..$1})" || return 1; }
 
-## cheat sheet 
+
+
+
+# wifi 
+#wifi iwd module , and  iwctl is the command
+# to connect use iwctl station wlan0 connect ssid 
+iwctl station wlan0 get-networks
+ printf "\n connect: use 'iwctl station wlan0 connect <SSID>'\n"
+
+# cheat sheet 
 cht(){ 
     curl "cheat.sh/$1" 
 }
@@ -166,10 +160,7 @@ google() {
   echo "$response" | jq -r '.items[] | "\(.title)\n\(.link)\n"'
 }
 
-public_ip() {
-    curl -s ifconfig.me
-    echo " "
-}
+
 
 system_health() {
     echo "Disk Usage:"
@@ -261,9 +252,7 @@ sys_info() {
     whiptail --msgbox "$(uname -a)\n$(free -h)\n$(df -h)" 20 50
 }
 
-generate_password() {
-    tr -dc 'A-Za-z0-9_@#!$%&*' < /dev/urandom | head -c "${1:-12}" && echo
-}
+
 
 #PS1='\[\e[38;5;79m\]\u\[\e[0;48;5;127;1m\]\w\[\e[0m\]'
 PS1='\[\e[38;5;82m\]\u@\h \[\e[38;5;208m\] \[\e[38;5;75m\]\w \[\e[0;48;5;236;1m\]💻 \[\e[0m\] \$ '
@@ -276,3 +265,4 @@ eval "$(pyenv init -)"
 bind '"\ea": "b"'
 # Map Alt+S to send 'n'
 bind '"\ew": "n"'
+
