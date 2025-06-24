@@ -14,6 +14,7 @@
   "modules-center": ["hyprland/window"],
   "modules-right": [
     "network",
+    "custom/autolock",
     "battery",
     "bluetooth",
     "pulseaudio",
@@ -63,6 +64,13 @@
     "tooltip": true,
     "tooltip-format": "Reboot"
   },
+  "custom/autolock": {
+    "format": "{}",
+    "exec": "~/.config/hypr/scripts/toggle_hypridle.sh",
+    "return-type": "json",
+    "on-click": "~/.config/hypr/scripts/toggle_hypridle.sh",
+    "interval": 60
+  },
 
   "custom/power": {
     "format": "  ",
@@ -80,13 +88,14 @@
   },
 
   "network": {
-    "format": "{}",
-  "exec": "~/.config/hypr/scripts/iwd.sh",
-  "interval": 5,
-  "return-type": "json",
-  "tooltip": true,
-  "on-click": "foot -e iwctl"
-     },
+     "format-wifi": "<span size='13000' foreground='#00000c'>  </span>{essid}",
+      "format-ethernet": "<span size='13000' foreground='#f5e0dc'>󰤭  </span> Disconnected",
+      "format-linked": "{ifname} (No IP) ",
+      "format-disconnected": "<span size='13000' foreground='#f5e0dc'>  </span>Disconnected",
+      "tooltip-format-wifi": "Signal Strength: {signalStrength}%",
+      // "on-click": "foot -e   nmtui"
+
+ },
 
   "battery": {
     "states": {

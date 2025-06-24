@@ -13,8 +13,6 @@ fi
 export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 export PATH="$HOME/scripts:$PATH"
 export CMAKE_MAKE_PROGRAM=ninja
-export CC=gcc
-export CXX=g++
 # User specific aliases and functions
 if [ -d ~/.bashrc.d ]; then
     for rc in ~/.bashrc.d/*; do
@@ -25,7 +23,7 @@ if [ -d ~/.bashrc.d ]; then
 fi
 
 unset rc
-export HISTCONTROL=ignoredups
+export HISTCONTROL=ignoredups:erasedups:ignorespace
 export COLORFGBG='default;default'
 # Initialize zoxide and fzf with the bash  , zoxide hellps to auto jumps and add directory to its database 
 eval "$(zoxide init bash)"
@@ -44,6 +42,7 @@ export $(dbus-launch)
 export TZ="Asia/Kolkata"
 date '+%b %d (%a) %I:%M%p'
 export GTK_THEME=Adwaita:dark
+eval "$(atuin init bash)"
 
 alias neo='nvim ~/.config/nvim/init.lua'
 alias zeb-duke='blueman-manager'
@@ -95,6 +94,7 @@ alias disconnect=" iwctl station wlan0 disconnect"
 #wifi iwd module , and  iwctl is the command
 # to connect use iwctl station wlan0 connect ssid 
 iwctl station wlan0 get-networks
+
  printf "\n connect: use 'iwctl station wlan0 connect <SSID>'\n"
 
 # cheat sheet 

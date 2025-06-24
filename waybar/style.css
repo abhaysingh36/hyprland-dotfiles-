@@ -83,6 +83,9 @@
 #window{
   background-color: #74c7ec;
 }
+#custom-autolock{
+  background-color: #74c7ec;
+}
 
 #custom-brightness {
     border-radius: 4px;
@@ -134,4 +137,16 @@ tooltip label {
   padding: 5px;
   background-color: #131822;
   color: #C0C0C0;
+}
+#custom-autolock{
+  border-radius: 4px;
+  margin: 6px 3px;
+  padding: 6px 12px;
+}
+#custom-autolock.autolock-enabled {
+  color: #00ff00; /* Green when autolock is enabled */
+}
+
+#custom-autolock.autolock-disabled {
+  color: #ff0000; /* Red when autolock is disabled */
 }
