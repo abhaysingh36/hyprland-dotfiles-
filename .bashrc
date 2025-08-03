@@ -23,27 +23,21 @@ if [ -d ~/.bashrc.d ]; then
 fi
 
 unset rc
-export HISTCONTROL=ignoredups:erasedups:ignorespace
-export COLORFGBG='default;default'
 # Initialize zoxide and fzf with the bash  , zoxide hellps to auto jumps and add directory to its database 
 eval "$(zoxide init bash)"
-# Set zoxide data directory
 export _ZO_DATA_DIR=/home/asdf/zoxide
-# Configure fzf
 export FZF_DEFAULT_COMMAND='ls -1'
 export FZF_DEFAULT_OPTS="--layout=reverse --info=inline"
 export FZF_DEFAULT_OPTS_FILE="$HOME/.fzf_defaults"
 export FZF_DEFAULT_OPTS_FILE=/home/asdf/.fzf-defaults
 export _ZO_ECHO='1'
-export CHEAT_DIR=/home/my_cheat_sheets
 export TERM=xterm-256color
 export PATH=$PATH:/var/lib/snapd/snap/bin
 export $(dbus-launch)
 export TZ="Asia/Kolkata"
 date '+%b %d (%a) %I:%M%p'
 export GTK_THEME=Adwaita:dark
-eval "$(atuin init bash)"
-
+eval "$(mcfly init bash)"
 alias neo='nvim ~/.config/nvim/init.lua'
 alias zeb-duke='blueman-manager'
 alias s='. ~/.bashrc'
@@ -81,10 +75,7 @@ alias cd..='cd ..'
 alias connect=" iwctl station wlan0 connect"
 alias disconnect=" iwctl station wlan0 disconnect"
 
-# system architecture commands or notes 
-# sudo su --> changes user  to root user 
-# sudo su - asdf --> changes  user  to defined user 
-## Navigating backwards 
+
 ..() { cd "$(eval printf '../%.0s' {1..$1})" || return 1; }
 
 
@@ -94,6 +85,8 @@ alias disconnect=" iwctl station wlan0 disconnect"
 #wifi iwd module , and  iwctl is the command
 # to connect use iwctl station wlan0 connect ssid 
 iwctl station wlan0 get-networks
+# iwctl station wlan0 scan 
+
 
  printf "\n connect: use 'iwctl station wlan0 connect <SSID>'\n"
 
@@ -256,13 +249,9 @@ sys_info() {
 
 #PS1='\[\e[38;5;79m\]\u\[\e[0;48;5;127;1m\]\w\[\e[0m\]'
 PS1='\[\e[38;5;82m\]\u@\h \[\e[38;5;208m\] \[\e[38;5;75m\]\w \[\e[0;48;5;236;1m\]💻 \[\e[0m\] \$ '
+bind -r "\C-z"  # Unbind Ctrl+Z from Bash suspend
+eval "$(mcfly init bash)"
+source /usr/share/blesh/ble.sh  # For autosuggestions
 
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
-eval "$(pyenv init -)"
 
-bind '"\ea": "b"'
-# Map Alt+S to send 'n'
-bind '"\ew": "n"'
 
