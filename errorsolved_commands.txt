@@ -1,1 +1,4 @@
 sudo pacman -S vlc-plugin-ffmpeg
+yay -S auto-cpufreq
+sudo pacman -S powertop
+
