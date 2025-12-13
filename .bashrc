@@ -37,7 +37,6 @@ export $(dbus-launch)
 export TZ="Asia/Kolkata"
 date '+%b %d (%a) %I:%M%p'
 export GTK_THEME=Adwaita:dark
-eval "$(mcfly init bash)"
 alias neo='nvim ~/.config/nvim/init.lua'
 alias zeb-duke='blueman-manager'
 alias s='. ~/.bashrc'
@@ -74,6 +73,23 @@ alias docker_images='sudo docker images'
 alias cd..='cd ..'
 alias connect=" iwctl station wlan0 connect"
 alias disconnect=" iwctl station wlan0 disconnect"
+# Push Obsidian vault (local → remote)
+alias obsidian-push='rclone sync ~/obsidian obssyd:obsidian --progress'
+
+# Pull Obsidian vault (remote → local)
+alias obsidian-pull='rclone sync obssyd:obsidian ~/obsidian --progress'
+# Rclone MEGA Sync Aliases
+# alias mega-push='rclone sync ~/self_help mega:self_help --progress'
+# alias mega-pull='rclone sync mega:self_help ~/self_help --progress'
+alias backup-pull='rclone sync obssyd:Backups ~/Robotics_bkup/  --progress'
+alias backup-push='rclone sync ~/Robotics_bkup/  obssyd:Backups --progress'
+alias keepass-push='rclone sync ~/keepass/ keepass:Keepass --progress'
+alias keepass-pull='rclone sync keepass:Keepass ~/keepass/ --progress'
+
+
+
+
+
 
 
 ..() { cd "$(eval printf '../%.0s' {1..$1})" || return 1; }
@@ -88,7 +104,6 @@ alias networks=' iwctl station wlan0 get-networks '
 # iwctl station wlan0 scan 
 
 
- printf "\n connect: use 'iwctl station wlan0 connect <SSID>'\n"
 
 # cheat sheet 
 cht(){ 
@@ -250,7 +265,6 @@ sys_info() {
 #PS1='\[\e[38;5;79m\]\u\[\e[0;48;5;127;1m\]\w\[\e[0m\]'
 PS1='\[\e[38;5;82m\]\u@\h \[\e[38;5;208m\] \[\e[38;5;75m\]\w \[\e[0;48;5;236;1m\]💻 \[\e[0m\] \$ '
 bind -r "\C-z"  # Unbind Ctrl+Z from Bash suspend
-eval "$(mcfly init bash)"
 source /usr/share/blesh/ble.sh  # For autosuggestions
 
 
